@@ -61,7 +61,8 @@
 	              <td>@actor.updateAt.format("yyyy-MM-dd HH:mm:ss")</td>
 	              <td>
 	                <form action="/actor/delete/@actor.id" method="post">
-	                  <input class="btn btn-warning" type="submit" value="delete">
+	                  <input class="btn btn-danger" type="submit" value="delete">
+	                  <a href="/actor/edit/@actor.id" method="get" class="btn btn-primary">edit</a>
 	                </form>
 	              </td>
               </tr>

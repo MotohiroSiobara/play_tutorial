@@ -55,9 +55,8 @@ public class Actor extends Model {
 
   public static Find<Long, Actor> finder = new Find<Long, Actor>(){};
 
-  public static Actor convertToModel(ActorForm form) {
-  	  Actor actor = new Actor();
-  	  actor.id = StringUtils.isNotEmpty(form.id) ? Long.valueOf(form.id) : null;
+  public static Actor convertToModel(ActorForm form, Actor actor) {
+  	  actor.id = StringUtils.isNotEmpty(form.id) ? Long.valueOf(form.id) : actor.id;
   	  actor.name = form.name;
   	  actor.height = StringUtils.isNotEmpty(form.height) ? Integer.valueOf(form.height) : null;
   	  actor.blood = form.blood;

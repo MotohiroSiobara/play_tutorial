@@ -1,9 +1,8 @@
-@(message: String, actorForm: Form[views.form.ActorForm])
-
+@(message: String, actorForm: Form[views.form.ActorForm], actor: models.Actor)
 @import play.i18n._
 @import models.Prefecture
 
-@main("Actor Create", "俳優登録") {
+@main("Actor Edit", "俳優編集") {
   @if(flash.containsKey("error")) {
   		<div class="row">
       <div class="col-md-12 well">
@@ -15,10 +14,7 @@
   }
   <div class="row">
     <div class="col-md-12">
-      <form class="form-horizontal" role="form" action="/actor/save" method="post">
-        @defining(actorForm("id")) { idField =>
-          <input type="hidden" id="@idField.id" name="@idField.name" value="@idField.value">
-        }
+      <form class="form-horizontal" role="form" action="/actor/update/@actor.id" method="post">
         <div class="form-group">
           @defining(actorForm("name")) { nameField =>
             <label for="@nameField.id" class="col-md-2 control-label">@Messages.get("actor.name")</label>
@@ -36,7 +32,11 @@
             <div class="col-sm-10">
             	  <select id="@bloodField.id" class="form-control" name="@bloodField.name">
                 @for(blood <- Array("A", "B", "O", "AB")) {
-            	      <option>@blood</option>
+                  @if(blood == bloodField.value) {
+              			  <option selected>@blood</option>
+              	    } else {
+              	      <option>@blood</option>
+              	    }
               	  }
               </select>
             </div>
@@ -58,9 +58,12 @@
           <label for="birthplaceIdField.id" class="col-sm-2 control-label">@Messages.get("actor.birthplace")</label>
           <div class="col-sm-10">
             <select id="@birthplaceIdField.id" class="form-control" name="@birthplaceIdField.name">
-              <option value="">---</option>
               @for(pref <- Prefecture.list()) {
-              <option value="@pref.id">@pref.name</option>
+                @if(String.valueOf(pref.id) == birthplaceIdField.value) {
+              			<option value="@pref.id" selected>@pref.name</option>
+              	  } else {
+              	    <option value="@pref.id">@pref.name</option>
+              	  }
               }
             </select>
             @if(birthplaceIdField.hasErrors) {
@@ -70,7 +73,7 @@
           }
         </div>
         <div class="form-group">
-          <input class="btn btn-default" type="submit" value="save" />
+          <input class="btn btn-default" type="submit" value="update" />
         </div>
       </form>
     </div>

@@ -1,10 +1,13 @@
 package views.form;
 
 import java.util.ArrayList;
+
+import models.Actor;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import play.data.validation.ValidationError;
 import play.i18n.Messages;
+import utils.DateParser;
 
 public class ActorForm {
   public String id = "";
@@ -24,6 +27,15 @@ public class ActorForm {
   	  this.blood = blood;
     this.birthday = birthday;
     this.birthplaceId = birthplaceId;
+  }
+
+  public ActorForm(Actor actor) {
+  	  this.id = String.valueOf(actor.id);
+  	  this.name = actor.name;
+  	  this.height = String.valueOf(actor.height);
+    this.blood = actor.blood;
+  	  this.birthday = DateParser.format(actor.birthday);
+  	  this.birthplaceId = String.valueOf(actor.birthplaceId);
   }
 
   public List<ValidationError> validate() {
