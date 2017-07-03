@@ -87,6 +87,11 @@ public class Application extends Controller {
   	  return redirect(routes.Application.index());
   }
 
+  public Result edit(Long id) {
+  	  logger.info("Application#edit");
+  	  return ok(edit.render("Actor Edit", id));
+  }
+
   public Result init() {
   	  logger.info("Application#init");
 

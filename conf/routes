@@ -12,8 +12,10 @@ GET     /                           controllers.Application.index()
 GET     /actor                      controllers.Application.index()
 GET     /actor/detail/:id           controllers.Application.detail(id: Long)
 GET     /actor/create               controllers.Application.create()
+GET     /actor/edit/:id             controllers.Application.edit(id: Long)
 POST    /actor/save                 controllers.Application.save()
 POST    /actor/delete/:id           controllers.Application.delete(id: Long)
+
 
 GET     /init                       controllers.Application.init()
 
