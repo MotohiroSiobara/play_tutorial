@@ -60,14 +60,10 @@
 	              <td>@actor.birthplaceId</td>
 	              <td>@actor.updateAt.format("yyyy-MM-dd HH:mm:ss")</td>
 	              <td>
-	                <div class="row">
-	                  <div class="col-md-3">
-	                    <a href="/actor/delete/@actor.id" method="post" class="btn btn-danger">
-	                  </div>
-	                  <div class="col-md-9">
-	                    <a href="/actor/edit/@actor.id" method="get" class="btn btn-primary">edit</a>
-	                  </div>
-	                </div>
+	                <form action="/actor/delete/@actor.id" method="post">
+	                  <input class="btn btn-danger" type="submit" value="delete">
+	                  <a href="/actor/edit/@actor.id" method="get" class="btn btn-primary">edit</a>
+	                </form>
 	              </td>
               </tr>
             }

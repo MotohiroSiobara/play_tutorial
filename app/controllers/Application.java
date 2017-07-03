@@ -89,7 +89,10 @@ public class Application extends Controller {
 
   public Result edit(Long id) {
   	  logger.info("Application#edit");
-  	  return ok(edit.render("Actor Edit", id));
+  	  Actor actor = Actor.finder.byId(id);
+  	  ActorForm form = new ActorForm(actor);
+  	  Form<ActorForm> formData = Form.form(ActorForm.class).fill(form);
+  	  return ok(edit.render("Actor Edit", formData));
   }
 
   public Result init() {
