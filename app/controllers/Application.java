@@ -46,13 +46,13 @@ public class Application extends Controller {
   public Result save() {
   	  logger.info("Application#save");
   	  Form<ActorForm> formData = Form.form(ActorForm.class).bindFromRequest();
-  	  System.out.println(formData);
   	  if (formData.hasErrors()) {
       	flash("error", Messages.get("actor.validation.error"));
       	return badRequest(create.render("retry", formData));
   	  } else {
-  	  	  Actor actor = Actor.convertToModel(formData.get());
   	  	  Ebean.execute(()->{
+  	  	  	Actor actor = new Actor();
+    	  	  actor = Actor.convertToModel(formData.get(), actor);
   	  	  	  SqlRow row = Ebean.createSqlQuery("SELECT MAX(id) AS cnt FROM actor").findUnique();
   	  	  	  Long cnt = row.getLong("cnt");
   	  	  	  actor.id = cnt == null ? 1L : (cnt + 1L); //保存対象のactorがすでに存在するかどうかのチェック
@@ -61,6 +61,21 @@ public class Application extends Controller {
   	  	  flash("success", Messages.get("actor.save.success"));
   	  }
   	  return redirect(routes.Application.index());
+  }
+
+  public Result update(Long id) {
+	  logger.info("Application#update");
+	  Actor actor = Actor.finder.byId(id);
+	  Form<ActorForm> formData = Form.form(ActorForm.class).bindFromRequest();
+	  if (formData.hasErrors()) {
+    		flash("error", Messages.get("actor.validation.error"));
+    		return badRequest(edit.render("retry", formData, actor));
+	  } else {
+	  	  	actor = Actor.convertToModel(formData.get(), actor);
+	  	  	actor.save();
+	  	  flash("success", Messages.get("actor.save.success"));
+	  }
+	  return redirect(routes.Application.index());
   }
 
   public Result delete(Long id) {
@@ -92,7 +107,7 @@ public class Application extends Controller {
   	  Actor actor = Actor.finder.byId(id);
   	  ActorForm form = new ActorForm(actor);
   	  Form<ActorForm> formData = Form.form(ActorForm.class).fill(form);
-  	  return ok(edit.render("Actor Edit", formData));
+  	  return ok(edit.render("Actor Edit", formData, actor));
   }
 
   public Result init() {

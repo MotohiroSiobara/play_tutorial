@@ -34,10 +34,11 @@
           @defining(actorForm("blood")) { bloodField =>
             <label for="bloodField.id" class="col-sm-2 control-label">@Messages.get("actor.blood")</label>
             <div class="col-sm-10">
-              <input type="text" id="@bloodField.id" class="form-control" name="@bloodField.name" value="@bloodField.value">
-              @if(bloodField.hasErrors) {
-                <span class="help-block">@bloodField.errors.mkString(", ")</span>
-              }
+            	  <select id="@bloodField.id" class="form-control" name="@bloodField.name">
+                @for(blood <- Array("A", "B", "O", "AB")) {
+            	      <option>@blood</option>
+              	  }
+              </select>
             </div>
           }
         </div>
